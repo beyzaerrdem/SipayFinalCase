@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace Api.DataAccess.Repository
         List<Entity> GetAll();
         Entity GetById(int id);
         IQueryable<Entity> GetAllAsQueryable();
+        IEnumerable<Entity> Where(Expression<Func<Entity, bool>> expression);
         void Save();
     }
 }

@@ -20,7 +20,7 @@ namespace Api.DataAccess.Models
 
         public decimal InvoiceAmount { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 
     public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>

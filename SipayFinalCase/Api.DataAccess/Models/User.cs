@@ -29,7 +29,7 @@ namespace Api.DataAccess.Models
 
         public string Role { get; set; }
 
-        public Apartment Apartment { get; set; }
+        public virtual Apartment Apartment { get; set; }
 
         public List<Invoice> Invoices { get; set; }
 

@@ -16,7 +16,7 @@ namespace Api.DataAccess.Models
 
         public string? PlateNo { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 
     public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>

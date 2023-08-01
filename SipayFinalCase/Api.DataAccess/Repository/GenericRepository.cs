@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,6 +58,11 @@ namespace Api.DataAccess.Repository
         public void Save()
         {
             _dbContext.SaveChanges();
+        }
+
+        public IEnumerable<Entity> Where(Expression<Func<Entity, bool>> expression)
+        {
+            return _dbContext.Set<Entity>().Where(expression).AsQueryable();
         }
     }
 }

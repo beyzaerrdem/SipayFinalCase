@@ -7,13 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.0.0" />
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api.Base\Api.Base.csproj" />
     <ProjectReference Include="..\Api.DataAccess\Api.DataAccess.csproj" />
-    <ProjectReference Include="..\Api.Schema\Api.Schema.csproj" />
   </ItemGroup>
 
 </Project>

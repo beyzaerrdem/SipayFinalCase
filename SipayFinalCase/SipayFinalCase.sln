@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.DataAccess", "Api.DataA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Base", "Api.Base\Api.Base.csproj", "{220F7E09-9C74-4467-B96D-F444A34416CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Business", "Api.Business\Api.Business.csproj", "{D3E9CEB2-46AF-424C-B13C-B1DCF5DFB594}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Business", "Api.Business\Api.Business.csproj", "{D3E9CEB2-46AF-424C-B13C-B1DCF5DFB594}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Schema", "Api.Schema\Api.Schema.csproj", "{359E7394-52FE-424A-9E64-132AF98A81BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D3E9CEB2-46AF-424C-B13C-B1DCF5DFB594}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3E9CEB2-46AF-424C-B13C-B1DCF5DFB594}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3E9CEB2-46AF-424C-B13C-B1DCF5DFB594}.Release|Any CPU.Build.0 = Release|Any CPU
+		{359E7394-52FE-424A-9E64-132AF98A81BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{359E7394-52FE-424A-9E64-132AF98A81BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{359E7394-52FE-424A-9E64-132AF98A81BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{359E7394-52FE-424A-9E64-132AF98A81BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

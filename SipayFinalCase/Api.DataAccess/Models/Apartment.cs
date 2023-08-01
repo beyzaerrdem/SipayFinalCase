@@ -24,7 +24,7 @@ namespace Api.DataAccess.Models
 
         public int ApartmentNo { get; set; }   
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 
     public class ApartmentConfiguration : IEntityTypeConfiguration<Apartment>

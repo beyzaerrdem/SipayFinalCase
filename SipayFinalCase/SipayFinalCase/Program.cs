@@ -1,6 +1,9 @@
 using Api.DataAccess;
+using Api.DataAccess.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using System.Reflection;
+using AutoMapper;
+using Api.Schema.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +14,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddDbContext<SipayApiDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection")));
+
+var config = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile(new MappingProfile());
+});
+
+builder.Services.AddSingleton(config.CreateMapper());
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
