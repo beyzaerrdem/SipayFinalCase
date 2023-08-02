@@ -1,12 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.DataAccess.Models
 {
@@ -14,11 +7,11 @@ namespace Api.DataAccess.Models
     {
         public int Id { get; set; }
 
-        public string Block { get; set; }
+        public int Block { get; set; }
 
         public bool Status { get; set; }
 
-        public string Type { get; set; }
+        public int Type { get; set; }
 
         public int Floor { get; set; }
 
@@ -38,6 +31,5 @@ namespace Api.DataAccess.Models
             builder.Property(x => x.Floor).IsRequired(true);
             builder.Property(x => x.ApartmentNo).IsRequired(true);
         }
-
     }
 }

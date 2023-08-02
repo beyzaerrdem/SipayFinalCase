@@ -1,73 +1,59 @@
 ﻿using Api.Base.BaseResponse;
-using Api.DataAccess;
-using Api.DataAccess.Models;
-using Api.DataAccess.UnitOfWork;
+using Api.Business;
 using Api.Schema.Request;
 using Api.Schema.Response;
-using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Api.Service.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public UserController(IUnitOfWork unitOfWork, IMapper mapper) 
+        public UserController(IUserService userService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _userService = userService;
         }
-
 
         [HttpGet]
         public ApiResponse<List<UserResponse>> GetAll()
         {
-            var entityList = _unitOfWork.UserRepository.GetAll();
-            var map = _mapper.Map<List<User>, List<UserResponse>>(entityList);
-            return new ApiResponse<List<UserResponse>>(map);
+            var entityList = _userService.GetAll();
+            return entityList;
         }
 
         [HttpGet("{id}")]
         public ApiResponse<UserResponse> Get(int id)
         {
-            var entity = _unitOfWork.UserRepository.GetById(id);
-            var map = _mapper.Map<User, UserResponse>(entity);
-            return new ApiResponse<UserResponse>(map);
+            var entity = _userService.GetById(id);
+            return entity;
         }
 
-       
         [HttpPost]
         public ApiResponse Post([FromBody] UserRequest request)
         {
-            var entity = _mapper.Map<UserRequest, User>(request);
-            _unitOfWork.UserRepository.Insert(entity);
-            return new ApiResponse();
+            var entity = _userService.Insert(request);
+            return entity;
         }
 
-     
+        [Authorize(Roles = "user,admin")]
         [HttpPut("{id}")]
         public ApiResponse Put(int id, [FromBody] UserRequest request)
         {
-            //var entityId = _userRepository.GetById(id);
-            //var entity = _mapper.Map<UserRequest, User>(entityId);
-            //_userRepository.Update(entity);
-            //return new ApiResponse();
-            var entity = _mapper.Map<UserRequest, User>(request);
-            _unitOfWork.UserRepository.Insert(entity);
-            entity.Id = id;
-            _unitOfWork.UserRepository.Update(entity);
-            return new ApiResponse();
+            var response = _userService.Update(id, request);
+            return response;
         }
 
         [HttpDelete("{id}")]
         public ApiResponse Delete(int id)
         {
-            _unitOfWork.UserRepository.DeleteById(id);
-            return new ApiResponse();
+            var response = _userService.Delete(id);
+            return response;
         }
     }
 }

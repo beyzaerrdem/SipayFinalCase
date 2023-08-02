@@ -26,6 +26,7 @@ namespace Api.Business.Service.Generic
                     return new ApiResponse("Kayıt bulunamadı.");
                 }
                 _unitOfWork.DynamicRepository<TEntity>().DeleteById(id);
+                _unitOfWork.DynamicRepository<TEntity>().Save();
                 return new ApiResponse();
             }
             catch (Exception ex)
@@ -76,7 +77,7 @@ namespace Api.Business.Service.Generic
             {              
                 var entity = _mapper.Map<TRequest, TEntity>(request);
                 _unitOfWork.DynamicRepository<TEntity>().Insert(entity);
-                _unitOfWork.Saved();
+                _unitOfWork.DynamicRepository<TEntity>().Save();
                 return new ApiResponse();
             }
             catch (Exception ex)
@@ -98,7 +99,7 @@ namespace Api.Business.Service.Generic
 
                 var entity = _mapper.Map<TRequest, TEntity>(request);
                 _unitOfWork.DynamicRepository<TEntity>().Update(entity);
-                _unitOfWork.Saved();
+                _unitOfWork.DynamicRepository<TEntity>().Save();
                 return new ApiResponse();
             }
             catch (Exception ex)

@@ -1,10 +1,5 @@
 ﻿using Api.DataAccess.Models;
 using Api.DataAccess.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Api.DataAccess.UnitOfWork
 {
@@ -18,5 +13,6 @@ namespace Api.DataAccess.UnitOfWork
         IGenericRepository<Apartment> ApartmentRepository { get; }
         IGenericRepository<Vehicle> VehicleRepository { get; }
         IGenericRepository<Invoice> InvoiceRepository { get; }
+        IGenericRepository<UserLogin> UserLoginRepository { get; }
     }
 }

@@ -5,7 +5,7 @@ using Api.Schema.Response;
 
 namespace Api.Business;
 
-public interface IUserService : IGenericService<User, UserRequest, UserResponse>
-{ 
-
+public interface IUserLoginService : IGenericService<UserLogin,UserLoginRequest,UserLoginResponse>
+{
+    public string RandomPasswordGenerator();
 }

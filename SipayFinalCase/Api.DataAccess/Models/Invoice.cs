@@ -31,6 +31,5 @@ namespace Api.DataAccess.Models
             builder.Property(x => x.InvoiceType).IsRequired(true).HasMaxLength(50);   
             builder.Property(x => x.InvoiceAmount).IsRequired(true).HasPrecision(10, 4).HasDefaultValue(0);                 
         }
-
     }
 }

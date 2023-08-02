@@ -27,7 +27,7 @@ namespace Api.DataAccess.Models
 
         public string PhoneNumber { get; set; }
 
-        public string Role { get; set; }
+        public int Role { get; set; }
 
         public virtual Apartment Apartment { get; set; }
 
@@ -46,7 +46,7 @@ namespace Api.DataAccess.Models
             builder.Property(x => x.Lastname).IsRequired(true).HasMaxLength(30);
             builder.Property(x => x.Tc).IsRequired(true).HasMaxLength(11);
             builder.Property(x => x.PhoneNumber).IsRequired(true).HasMaxLength(15);
-            builder.Property(x => x.Role).IsRequired(true);
+            builder.Property(x => x.Role).IsRequired(true).HasDefaultValue(0);
                  
             builder.HasMany(x => x.Invoices)
                 .WithOne(x => x.User)

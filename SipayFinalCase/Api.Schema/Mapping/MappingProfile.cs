@@ -2,11 +2,6 @@
 using Api.Schema.Request;
 using Api.Schema.Response;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Api.Schema.Mapping
 {
@@ -25,6 +20,9 @@ namespace Api.Schema.Mapping
 
             CreateMap<VehicleRequest, Vehicle>();
             CreateMap<Vehicle, VehicleResponse>();
+
+            CreateMap<UserLoginRequest, UserLogin>();
+            CreateMap<UserLogin, UserLoginResponse>();
         }
     }
 }

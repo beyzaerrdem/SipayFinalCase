@@ -1,7 +1,5 @@
 ﻿using Api.DataAccess.Models;
 using Api.DataAccess.Repository;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Principal;
 
 namespace Api.DataAccess.UnitOfWork
 {
@@ -16,6 +14,7 @@ namespace Api.DataAccess.UnitOfWork
             ApartmentRepository = new GenericRepository<Apartment>(_context);
             VehicleRepository = new GenericRepository<Vehicle>(_context);
             InvoiceRepository = new GenericRepository<Invoice>(_context);
+            UserLoginRepository = new GenericRepository<UserLogin>(_context);
         }
 
         public IGenericRepository<Entity> DynamicRepository<Entity>() where Entity : class
@@ -36,6 +35,6 @@ namespace Api.DataAccess.UnitOfWork
 
         public IGenericRepository<Invoice> InvoiceRepository { get; private set; }
 
-
+        public IGenericRepository<UserLogin> UserLoginRepository { get; private set; }
     }
 }

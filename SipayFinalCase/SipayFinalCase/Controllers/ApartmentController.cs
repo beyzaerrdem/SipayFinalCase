@@ -1,68 +1,57 @@
 ﻿using Api.Base.BaseResponse;
-using Api.DataAccess.Models;
-using Api.DataAccess.UnitOfWork;
+using Api.Business;
 using Api.Schema.Request;
 using Api.Schema.Response;
-using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Service.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ApartmentController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly IApartmentService _apartmentService;
 
-        public ApartmentController(IUnitOfWork unitOfWork, IMapper mapper)
+        public ApartmentController(IApartmentService apartmentService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _apartmentService = apartmentService;
         }
 
         [HttpGet]
         public ApiResponse<List<ApartmentResponse>> GetAll()
         {
-            var entityList = _unitOfWork.ApartmentRepository.GetAll();
-            var map = _mapper.Map<List<Apartment>, List<ApartmentResponse>>(entityList);
-            return new ApiResponse<List<ApartmentResponse>>(map);
+            var entityList = _apartmentService.GetAll();
+            return entityList;
         }
 
         [HttpGet("{id}")]
         public ApiResponse<ApartmentResponse> Get(int id)
         {
-            var entity = _unitOfWork.ApartmentRepository.GetById(id);
-            var map = _mapper.Map<Apartment, ApartmentResponse>(entity);
-            return new ApiResponse<ApartmentResponse>(map);
+            var entity = _apartmentService.GetById(id);
+            return entity;
         }
-
+     
         [HttpPost]
         public ApiResponse Post([FromBody] ApartmentRequest request)
         {
-            var entity = _mapper.Map<ApartmentRequest, Apartment>(request);
-            _unitOfWork.ApartmentRepository.Insert(entity);
-            _unitOfWork.ApartmentRepository.Save();
-            return new ApiResponse();
+            var entity = _apartmentService.Insert(request);
+            return entity;
         }
-
 
         [HttpPut("{id}")]
         public ApiResponse Put(int id, [FromBody] ApartmentRequest request)
         {
-            var entity = _mapper.Map<ApartmentRequest, Apartment>(request);
-            _unitOfWork.ApartmentRepository.Insert(entity);
-            entity.Id = id;
-            _unitOfWork.ApartmentRepository.Update(entity);
-            _unitOfWork.ApartmentRepository.Save();
-            return new ApiResponse();
+            var response = _apartmentService.Update(id, request);
+            return response;
         }
 
         [HttpDelete("{id}")]
         public ApiResponse Delete(int id)
         {
-            _unitOfWork.ApartmentRepository.DeleteById(id);
-            return new ApiResponse();
+            var response = _apartmentService.Delete(id);
+            return response;
         }
     }
 }
