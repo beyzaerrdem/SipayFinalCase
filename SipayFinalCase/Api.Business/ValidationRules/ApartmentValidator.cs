@@ -1,14 +1,11 @@
 ﻿using Api.DataAccess.Models;
+using Api.Schema.Request;
+using Api.Schema.Response;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Api.Business.ValidationRules
 {
-    public class ApartmentValidator : AbstractValidator<Apartment>
+    public class ApartmentValidator : AbstractValidator<ApartmentRequest>
     {
         public ApartmentValidator()
         { 

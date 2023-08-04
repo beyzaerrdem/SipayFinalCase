@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Api.Base.BaseModel;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.DataAccess.Models
 {
-    public class UserLogin
+    public class UserLogin : IdBaseModel
     {
-        public int Id { get; set; }
-
         public string UserName { get; set; }
 
         public string Email { get; set; }

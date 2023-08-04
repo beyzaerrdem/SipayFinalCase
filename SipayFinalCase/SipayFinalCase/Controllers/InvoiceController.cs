@@ -1,5 +1,6 @@
 ﻿using Api.Base.BaseResponse;
 using Api.Business;
+using Api.Business.ValidationRules;
 using Api.Schema.Request;
 using Api.Schema.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -34,8 +35,18 @@ namespace Api.Service.Controllers
         [HttpPost]
         public ApiResponse Post([FromBody] InvoiceRequest request)
         {
-            var entity = _invoiceService.Insert(request);
-            return entity;
+            InvoiceResponse invoiceResponse = new InvoiceResponse();
+            InvoiceValidator invoiceValidator = new InvoiceValidator();
+            var result = invoiceValidator.Validate(request);
+            if (result.IsValid)
+            {
+    
+                var entity = _invoiceService.Insert(request);
+                return entity;
+            }
+            var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
+            var errorMessage = string.Join(", ", errorMessages);
+            return new ApiResponse { Success = false, Message = errorMessage };
         }
 
         [HttpPut("{id}")]

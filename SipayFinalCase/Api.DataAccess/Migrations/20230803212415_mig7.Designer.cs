@@ -3,6 +3,7 @@ using System;
 using Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.DataAccess.Migrations
 {
     [DbContext(typeof(SipayApiDbContext))]
-    partial class SipayApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230803212415_mig7")]
+    partial class mig7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,9 +35,8 @@ namespace Api.DataAccess.Migrations
                     b.Property<int>("ApartmentNo")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Block")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Block")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Floor")
                         .HasColumnType("integer");
@@ -45,10 +46,9 @@ namespace Api.DataAccess.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(true);
 
-                    b.Property<string>("Type")
-                        .IsRequired()
+                    b.Property<int>("Type")
                         .HasMaxLength(4)
-                        .HasColumnType("character varying(4)");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -63,6 +63,12 @@ namespace Api.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("CreditAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("DebitAmount")
+                        .HasColumnType("numeric");
+
                     b.Property<decimal>("InvoiceAmount")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(10, 4)
@@ -74,9 +80,6 @@ namespace Api.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<decimal>("PaidDept")
-                        .HasColumnType("numeric");
-
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
@@ -85,28 +88,6 @@ namespace Api.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("Api.DataAccess.Models.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("PaymentAmount")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Api.DataAccess.Models.User", b =>
@@ -139,29 +120,20 @@ namespace Api.DataAccess.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("character varying(15)");
 
-                    b.Property<string>("PlateNo")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
+                    b.Property<int>("Role")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
-                        .HasDefaultValue("0");
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
 
                     b.Property<string>("Tc")
                         .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("character varying(11)");
 
-                    b.Property<int>("UserLoginId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApartmentId")
                         .IsUnique();
-
-                    b.HasIndex("UserLoginId");
 
                     b.ToTable("Users");
                 });
@@ -240,17 +212,6 @@ namespace Api.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.DataAccess.Models.Payment", b =>
-                {
-                    b.HasOne("Api.DataAccess.Models.User", "User")
-                        .WithMany("Payments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Api.DataAccess.Models.User", b =>
                 {
                     b.HasOne("Api.DataAccess.Models.Apartment", "Apartment")
@@ -259,15 +220,7 @@ namespace Api.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.DataAccess.Models.UserLogin", "UserLogin")
-                        .WithMany()
-                        .HasForeignKey("UserLoginId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Apartment");
-
-                    b.Navigation("UserLogin");
                 });
 
             modelBuilder.Entity("Api.DataAccess.Models.Vehicle", b =>
@@ -290,8 +243,6 @@ namespace Api.DataAccess.Migrations
             modelBuilder.Entity("Api.DataAccess.Models.User", b =>
                 {
                     b.Navigation("Invoices");
-
-                    b.Navigation("Payments");
 
                     b.Navigation("Vehicles");
                 });

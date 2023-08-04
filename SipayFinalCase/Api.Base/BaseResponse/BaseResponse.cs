@@ -1,16 +1,12 @@
 ﻿namespace Api.Base.BaseResponse
 {
-    public partial class ApiResponse<T>
+    public partial class ApiResponse<T> : ApiResponse
     {
-        public bool Success { get; set; }
-        public string Message { get; set; }
-        public T Response { get; set; }
+        public T Response { get; set; } = default;
 
-        public ApiResponse(bool isSuccess)
+        public ApiResponse(bool isSuccess) : base(isSuccess) 
         {
-            Success = isSuccess;
-            Response = default;
-            Message = isSuccess ? "Success" : "Error";
+
         }
         public ApiResponse(T data)
         {
@@ -18,27 +14,24 @@
             Response = data;
             Message = "Success";
         }
-        public ApiResponse(string message)
+        public ApiResponse(string message) : base(message) 
         {
-            Success = false;
-            Response = default;
-            Message = message;
+                 
         }
     }
 
-    public partial class ApiResponse
-    {    
-        public ApiResponse(string message = null)
+    public partial class ApiResponse 
+    {
+        public ApiResponse(bool isSuccess)
         {
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                Success = true;
-            }
-            else
-            {
+            Success = isSuccess;      
+            Message = isSuccess ? "Success" : "Error";
+        }
+
+        public ApiResponse(string message = null)
+        {              
                 Success = false;
-                Message = message;
-            }
+                Message = message;       
         }
         public bool Success { get; set; }
         public string Message { get; set; }

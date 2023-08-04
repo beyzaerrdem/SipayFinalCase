@@ -5,6 +5,7 @@ using Api.DataAccess;
 using Api.DataAccess.UnitOfWork;
 using Api.Schema.Mapping;
 using AutoMapper;
+using Iyzipay;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -22,6 +23,7 @@ builder.Services.AddSwaggerGen();
 
 var JwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+builder.Services.Configure<Options>(builder.Configuration.GetSection("iyzico"));
 
 
 builder.Services.AddDbContext<SipayApiDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection")));

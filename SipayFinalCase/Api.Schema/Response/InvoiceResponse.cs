@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Api.Schema.Response
+﻿namespace Api.Schema.Response
 {
     public class InvoiceResponse
     {
@@ -16,5 +9,9 @@ namespace Api.Schema.Response
         public string InvoiceType { get; set; }
 
         public decimal InvoiceAmount { get; set; }
+
+        public decimal DebitAmount { get; set; }
+
+        public decimal CreditAmount { get; set; }
     }
 }

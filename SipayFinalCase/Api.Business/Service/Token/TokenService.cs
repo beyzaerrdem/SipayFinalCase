@@ -40,7 +40,6 @@ namespace Api.Business.Service.Token
             var user = _unitOfWork.UserLoginRepository.Where(x => x.UserName.Equals(request.UserName)).FirstOrDefault();
             if (user is null)
             {
-                //Log(request.UserName, LogType.InValidUserName);
                 return new ApiResponse<TokenResponse>("Invalid user informations");
             }
             if (user.Password.ToLower() != CreateMD5(request.Password))

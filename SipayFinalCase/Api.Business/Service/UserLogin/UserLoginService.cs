@@ -1,4 +1,5 @@
-﻿using Api.Business.Service.Generic;
+﻿using Api.Base.BaseResponse;
+using Api.Business.Service.Generic;
 using Api.DataAccess.Models;
 using Api.DataAccess.UnitOfWork;
 using Api.Schema.Request;
@@ -20,7 +21,6 @@ public class UserLoginService : GenericService<UserLogin, UserLoginRequest, User
 
     public string RandomPasswordGenerator()
     {
-        UserLoginRequest request = new UserLoginRequest();
         Random random = new Random();
 
         string password = string.Empty;
@@ -29,9 +29,12 @@ public class UserLoginService : GenericService<UserLogin, UserLoginRequest, User
         {
             password += random.Next(0, 10).ToString();
         }
+        return password;
+    }
 
-        request.Password = password;
-
-        return request.Password;
+    public override ApiResponse<UserLoginResponse> Insert(UserLoginRequest request)
+    {
+        request.Password = RandomPasswordGenerator();
+        return base.Insert(request);
     }
 }

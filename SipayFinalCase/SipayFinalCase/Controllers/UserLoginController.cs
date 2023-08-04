@@ -32,9 +32,9 @@ namespace Api.Service.Controllers
         }
 
         [HttpPost]
-        public ApiResponse Post([FromBody] UserLoginRequest request)
+        public ApiResponse<UserLoginResponse> Post([FromBody] UserLoginRequest request)
         {
-            var entity = _userLoginService.Insert(request);               
+            var entity = _userLoginService.Insert(request);
             return entity;
         }
 

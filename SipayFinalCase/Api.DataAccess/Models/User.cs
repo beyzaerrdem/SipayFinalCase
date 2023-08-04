@@ -1,21 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Api.Base.BaseModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Api.DataAccess.Models
 {
-    public class User
+    public class User : IdBaseModel
     {
-        public int Id { get; set; }
-
         [ForeignKey(nameof(Apartment))]
         public int ApartmentId { get; set; }
+
+        public int UserLoginId { get; set; }
 
         public string Name { get; set; }
 
@@ -27,9 +22,15 @@ namespace Api.DataAccess.Models
 
         public string PhoneNumber { get; set; }
 
-        public int Role { get; set; }
+        public string Role { get; set; }
+
+        public string? PlateNo { get; set; }
 
         public virtual Apartment Apartment { get; set; }
+
+        public virtual UserLogin UserLogin { get; set; }
+
+        public List<Payment> Payments { get; set; }
 
         public List<Invoice> Invoices { get; set; }
 
@@ -56,7 +57,7 @@ namespace Api.DataAccess.Models
             builder.HasMany(x => x.Vehicles)
               .WithOne(x => x.User)
               .HasForeignKey(x => x.UserId)
-              .IsRequired(true);
+              .IsRequired(true);                    
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using Api.Base.BaseResponse;
 using Api.Business;
+using Api.Business.ValidationRules;
 using Api.Schema.Request;
 using Api.Schema.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,7 @@ using System.Data;
 
 namespace Api.Service.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -37,11 +38,19 @@ namespace Api.Service.Controllers
         [HttpPost]
         public ApiResponse Post([FromBody] UserRequest request)
         {
-            var entity = _userService.Insert(request);
-            return entity;
+            UserValidator userValidator = new UserValidator();
+            var result = userValidator.Validate(request);
+            if (result.IsValid)
+            {
+                var entity = _userService.Insert(request);
+                return entity;
+            }
+            var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
+            var errorMessage = string.Join(", ", errorMessages);
+            return new ApiResponse { Success = false, Message = errorMessage };
         }
 
-        [Authorize(Roles = "user,admin")]
+        //[Authorize(Roles = "user,admin")]
         [HttpPut("{id}")]
         public ApiResponse Put(int id, [FromBody] UserRequest request)
         {

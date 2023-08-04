@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+using Api.Base.BaseModel;
 
 namespace Api.DataAccess.Models
 {
-    public class Vehicle
+    public class Vehicle : IdBaseModel
     {
-        public int Id { get; set; }
-
         public int UserId { get; set; }
 
         public string? PlateNo { get; set; }
@@ -19,7 +18,7 @@ namespace Api.DataAccess.Models
         public void Configure(EntityTypeBuilder<Vehicle> builder)
         {
             builder.Property(x => x.Id).IsRequired(true).UseIdentityColumn();
-            builder.Property(x => x.PlateNo).HasMaxLength(10);             
+            builder.Property(x => x.PlateNo).HasMaxLength(10);
         }
 
     }

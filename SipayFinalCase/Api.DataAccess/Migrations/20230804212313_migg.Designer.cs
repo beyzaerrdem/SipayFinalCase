@@ -3,6 +3,7 @@ using System;
 using Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.DataAccess.Migrations
 {
     [DbContext(typeof(SipayApiDbContext))]
-    partial class SipayApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230804212313_migg")]
+    partial class migg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,11 +76,11 @@ namespace Api.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<decimal>("PaidDept")
-                        .HasColumnType("numeric");
-
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("ÖdenenAmount")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 

@@ -3,6 +3,7 @@ using System;
 using Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.DataAccess.Migrations
 {
     [DbContext(typeof(SipayApiDbContext))]
-    partial class SipayApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230804194734_mig9")]
+    partial class mig9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,6 +65,12 @@ namespace Api.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("CreditAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("DebitAmount")
+                        .HasColumnType("numeric");
+
                     b.Property<decimal>("InvoiceAmount")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(10, 4)
@@ -73,9 +81,6 @@ namespace Api.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
-
-                    b.Property<decimal>("PaidDept")
-                        .HasColumnType("numeric");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");

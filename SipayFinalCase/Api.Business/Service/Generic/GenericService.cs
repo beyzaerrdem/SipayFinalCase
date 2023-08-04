@@ -15,7 +15,6 @@ namespace Api.Business.Service.Generic
             _unitOfWork = unitOfWork;   
         }
 
-
         public virtual ApiResponse Delete(int id)
         {
             try
@@ -71,22 +70,23 @@ namespace Api.Business.Service.Generic
             }
         }
 
-        public virtual ApiResponse Insert(TRequest request)
+        public virtual ApiResponse<TResponse> Insert(TRequest request)
         {
             try
             {              
-                var entity = _mapper.Map<TRequest, TEntity>(request);
+                var entity = _mapper.Map<TRequest, TEntity>(request);               
                 _unitOfWork.DynamicRepository<TEntity>().Insert(entity);
-                _unitOfWork.DynamicRepository<TEntity>().Save();
-                return new ApiResponse();
+               _unitOfWork.DynamicRepository<TEntity>().Save();
+                var map = _mapper.Map<TEntity, TResponse>(entity);
+                return new ApiResponse<TResponse>(map);
             }
             catch (Exception ex)
             {
-                return new ApiResponse(ex.Message);
+                return new ApiResponse<TResponse>(ex.Message);
             }
         }
 
-        public virtual ApiResponse Update(int id, TRequest request)
+        public virtual ApiResponse<TResponse> Update(int id, TRequest request)
         {
             try
             {
@@ -94,17 +94,18 @@ namespace Api.Business.Service.Generic
 
                 if(entityId  == null)
                 {
-                    return new ApiResponse("Kayıt bulunamadı.");
+                    return new ApiResponse<TResponse>("Kayıt bulunamadı.");
                 }
 
                 var entity = _mapper.Map<TRequest, TEntity>(request);
                 _unitOfWork.DynamicRepository<TEntity>().Update(entity);
                 _unitOfWork.DynamicRepository<TEntity>().Save();
-                return new ApiResponse();
+                var map = _mapper.Map<TEntity, TResponse>(entity);
+                return new ApiResponse<TResponse>(map);
             }
             catch (Exception ex)
             {
-                return new ApiResponse(ex.Message);
+                return new ApiResponse<TResponse>(ex.Message);
             }
         }
     }

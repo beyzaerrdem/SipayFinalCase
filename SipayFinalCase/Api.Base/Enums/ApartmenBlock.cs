@@ -1,6 +1,6 @@
 ﻿namespace Api.Business.Enums
 {
-    public enum ApartmenBlock
+    public enum ApartmentBlock
     {
         A = 1,
         B,

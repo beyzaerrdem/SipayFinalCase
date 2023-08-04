@@ -1,17 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Api.Base.BaseModel;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.DataAccess.Models
 {
-    public class Apartment
+    public class Apartment : IdBaseModel
     {
-        public int Id { get; set; }
-
-        public int Block { get; set; }
+        public string Block { get; set; }
 
         public bool Status { get; set; }
 
-        public int Type { get; set; }
+        public string Type { get; set; }
 
         public int Floor { get; set; }
 

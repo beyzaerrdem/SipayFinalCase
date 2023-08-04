@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Base", "Api.Base\Api.Ba
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Business", "Api.Business\Api.Business.csproj", "{D3E9CEB2-46AF-424C-B13C-B1DCF5DFB594}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Schema", "Api.Schema\Api.Schema.csproj", "{359E7394-52FE-424A-9E64-132AF98A81BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Schema", "Api.Schema\Api.Schema.csproj", "{359E7394-52FE-424A-9E64-132AF98A81BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,24 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Api.Base.BaseModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Api.DataAccess.Models
 {
-    public class Invoice
+    public class Invoice : IdBaseModel
     {
-        public int Id { get; set; }
-
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
 
         public string InvoiceType { get; set; }
 
         public decimal InvoiceAmount { get; set; }
+
+        public decimal DeptAmount => InvoiceAmount - PaidDept; //borç = İnvoiceAmount - ödenenAmount
+
+        public decimal PaidDept { get; set; } //ödenen = paymentAmount
 
         public virtual User User { get; set; }
     }

@@ -1,4 +1,6 @@
-﻿namespace Api.Schema.Request
+﻿using Api.Schema.Response;
+
+namespace Api.Schema.Request
 {
     public class UserRequest
     {
@@ -15,5 +17,7 @@
         public string PhoneNumber { get; set; }
 
         public string Role { get; set; } //?
+
+        public List<VehicleRequest> Vehicles { get; set; }
     }
 }

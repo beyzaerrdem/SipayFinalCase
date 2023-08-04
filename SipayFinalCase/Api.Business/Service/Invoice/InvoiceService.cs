@@ -17,4 +17,13 @@ public class InvoiceService : GenericService<Invoice,InvoiceRequest,InvoiceRespo
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
+
+    public decimal Debt(int userId, decimal paymentAmount)
+    {
+        var invoice = _unitOfWork.InvoiceRepository.Where(x => x.UserId == userId).First();
+        invoice.PaidDept += paymentAmount;
+        _unitOfWork.InvoiceRepository.Update(invoice);
+        _unitOfWork.Saved();
+        return invoice.DeptAmount;
+    }
 }
