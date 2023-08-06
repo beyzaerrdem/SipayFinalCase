@@ -10,6 +10,6 @@
 
         public string CVC { get; set; }
 
-        public int PaymentAmount { get; set; }
+        public decimal PaymentAmount { get; set; }
     }
 }

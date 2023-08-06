@@ -5,6 +5,7 @@ using Iyzipay.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 
 namespace Api.Service.Controllers
 {
@@ -30,8 +31,8 @@ namespace Api.Service.Controllers
                 CreatePaymentRequest request = new CreatePaymentRequest();
                 request.Locale = Locale.TR.ToString();
                 //request.ConversationId = "123456789";
-                request.Price = (p.PaymentAmount + 0.1).ToString();
-                request.PaidPrice = (p.PaymentAmount + 0.1).ToString();
+                request.Price = p.PaymentAmount.ToString(CultureInfo.InvariantCulture);
+                request.PaidPrice = p.PaymentAmount.ToString(CultureInfo.InvariantCulture);
                 request.Currency = Currency.TRY.ToString();             
                 request.BasketId = "B67832";
                 request.PaymentChannel = PaymentChannel.WEB.ToString();
@@ -76,17 +77,8 @@ namespace Api.Service.Controllers
                 firstBasketItem.Name = "Borc";
                 firstBasketItem.Category1 = "Borc";
                 firstBasketItem.ItemType = BasketItemType.VIRTUAL.ToString();
-                firstBasketItem.Price = p.PaymentAmount.ToString();
+                firstBasketItem.Price = p.PaymentAmount.ToString(CultureInfo.InvariantCulture);
                 basketItems.Add(firstBasketItem);
-
-                BasketItem secondBasketItem = new BasketItem();
-                secondBasketItem.Id = "BI102";
-                secondBasketItem.Name = "Game code";
-                secondBasketItem.Category1 = "Game";
-                secondBasketItem.Category2 = "Online Game Items";
-                secondBasketItem.ItemType = BasketItemType.VIRTUAL.ToString();
-                secondBasketItem.Price = "0.1";
-                basketItems.Add(secondBasketItem);
 
                 request.BasketItems = basketItems;
 

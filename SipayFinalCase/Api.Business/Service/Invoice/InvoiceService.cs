@@ -20,7 +20,7 @@ public class InvoiceService : GenericService<Invoice,InvoiceRequest,InvoiceRespo
 
     public decimal Debt(int userId, decimal paymentAmount)
     {
-        var invoice = _unitOfWork.InvoiceRepository.Where(x => x.UserId == userId).First();
+        var invoice = _unitOfWork.InvoiceRepository.Where(x => x.User.UserLoginId == userId).First();
         invoice.PaidDept += paymentAmount;
         _unitOfWork.InvoiceRepository.Update(invoice);
         _unitOfWork.Saved();

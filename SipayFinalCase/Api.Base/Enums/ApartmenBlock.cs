@@ -1,11 +1,11 @@
-﻿namespace Api.Business.Enums
-{
-    public enum ApartmentBlock
-    {
-        A = 1,
-        B,
-        C,
-        D,
-        E,
-    }
-}
+﻿//namespace Api.Business.Enums
+//{
+//    public enum ApartmentBlock //todo
+//    {
+//        A = 1,
+//        B,
+//        C,
+//        D,
+//        E,
+//    }
+//}

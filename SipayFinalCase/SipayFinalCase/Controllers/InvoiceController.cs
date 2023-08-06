@@ -21,6 +21,7 @@ namespace Api.Service.Controllers
             _invoiceService = invoiceService;
         }
 
+        [Authorize(Roles = "admin,user")]
         [HttpGet]
         public ApiResponse<List<InvoiceResponse>> GetAll()
         {

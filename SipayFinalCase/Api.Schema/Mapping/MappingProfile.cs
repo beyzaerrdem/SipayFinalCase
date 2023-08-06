@@ -1,5 +1,4 @@
-﻿using Api.Business.Enums;
-using Api.DataAccess.Models;
+﻿using Api.DataAccess.Models;
 using Api.Schema.Request;
 using Api.Schema.Response;
 using AutoMapper;
