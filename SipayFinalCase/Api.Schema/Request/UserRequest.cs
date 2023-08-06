@@ -6,6 +6,8 @@ namespace Api.Schema.Request
     {
         public int ApartmentId { get; set; }
 
+        public int UserLoginId { get; set; }
+
         public string Name { get; set; }
 
         public string Lastname { get; set; }
@@ -18,6 +20,8 @@ namespace Api.Schema.Request
 
         public string Role { get; set; } //?
 
-        public List<VehicleRequest> Vehicles { get; set; }
+        public string? PlateNo { get; set; }
+
+
     }
 }

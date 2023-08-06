@@ -41,6 +41,7 @@ builder.Services.AddScoped<IApartmentService, ApartmentService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IUserLoginService, UserLoginService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 
 builder.Services.AddAuthentication(x =>

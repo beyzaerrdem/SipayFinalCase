@@ -12,9 +12,9 @@ namespace Api.DataAccess.UnitOfWork
 
             UserRepository = new GenericRepository<User>(_context);
             ApartmentRepository = new GenericRepository<Apartment>(_context);
-            VehicleRepository = new GenericRepository<Vehicle>(_context);
             InvoiceRepository = new GenericRepository<Invoice>(_context);
             UserLoginRepository = new GenericRepository<UserLogin>(_context);
+            MessageRepository = new GenericRepository<Message>(_context);
         }
 
         public IGenericRepository<Entity> DynamicRepository<Entity>() where Entity : class
@@ -31,10 +31,10 @@ namespace Api.DataAccess.UnitOfWork
 
         public IGenericRepository<Apartment> ApartmentRepository { get; private set; }
 
-        public IGenericRepository<Vehicle> VehicleRepository { get; private set; }
-
         public IGenericRepository<Invoice> InvoiceRepository { get; private set; }
 
         public IGenericRepository<UserLogin> UserLoginRepository { get; private set; }
+
+        public IGenericRepository<Message> MessageRepository { get; private set; }
     }
 }

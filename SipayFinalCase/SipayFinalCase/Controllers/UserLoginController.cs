@@ -2,10 +2,12 @@
 using Api.Business;
 using Api.Schema.Request;
 using Api.Schema.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Service.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserLoginController : ControllerBase

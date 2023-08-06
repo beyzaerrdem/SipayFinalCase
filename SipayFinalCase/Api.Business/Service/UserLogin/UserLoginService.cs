@@ -29,7 +29,19 @@ public class UserLoginService : GenericService<UserLogin, UserLoginRequest, User
         {
             password += random.Next(0, 10).ToString();
         }
+        //string mdPassword = CreateMD5(password);
         return password;
+    }
+
+    private string CreateMD5(string input)
+    {
+        using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+        {
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+            return Convert.ToHexString(hashBytes).ToLower();
+        }
     }
 
     public override ApiResponse<UserLoginResponse> Insert(UserLoginRequest request)

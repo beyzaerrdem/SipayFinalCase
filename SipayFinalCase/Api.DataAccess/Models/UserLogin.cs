@@ -27,7 +27,6 @@ namespace Api.DataAccess.Models
         {
             builder.Property(x => x.UserName).IsRequired(true).HasMaxLength(30);
             builder.Property(x => x.Email).IsRequired(true).HasMaxLength(30);
-            builder.Property(x => x.Password).IsRequired(true).HasMaxLength(50);
         }
     }
 }

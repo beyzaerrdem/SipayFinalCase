@@ -19,11 +19,11 @@ namespace Api.Schema.Mapping
             CreateMap<InvoiceRequest, Invoice>();
             CreateMap<Invoice, InvoiceResponse>();
 
-            CreateMap<VehicleRequest, Vehicle>();
-            CreateMap<Vehicle, VehicleResponse>();
-
             CreateMap<UserLoginRequest, UserLogin>();
             CreateMap<UserLogin, UserLoginResponse>();
+
+            CreateMap<MessageRequest, Message>();
+            CreateMap<Message, MessageResponse>();
         }
     }
 }

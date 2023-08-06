@@ -2,12 +2,13 @@
 using Api.Schema.Request;
 using Iyzipay.Model;
 using Iyzipay.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace Api.Service.Controllers
 {
-    //[Authorize(Roles ="user")]
+    [Authorize(Roles ="user")]
     [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : ControllerBase
@@ -29,8 +30,8 @@ namespace Api.Service.Controllers
                 CreatePaymentRequest request = new CreatePaymentRequest();
                 request.Locale = Locale.TR.ToString();
                 //request.ConversationId = "123456789";
-                request.Price = p.PaymentAmount.ToString();
-                request.PaidPrice = "1.2";
+                request.Price = (p.PaymentAmount + 0.1).ToString();
+                request.PaidPrice = (p.PaymentAmount + 0.1).ToString();
                 request.Currency = Currency.TRY.ToString();             
                 request.BasketId = "B67832";
                 request.PaymentChannel = PaymentChannel.WEB.ToString();
@@ -46,9 +47,10 @@ namespace Api.Service.Controllers
                 request.PaymentCard = paymentCard;
 
                 var userId = Request.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId");
+                        
                 Buyer buyer = new Buyer();
                 buyer.Id = userId.ToString();
-                buyer.Name = "John";
+                buyer.Name = "john";
                 buyer.Surname = "Doe";               
                 buyer.Email = "email@email.com";
                 buyer.IdentityNumber = "74300864791";     
@@ -77,16 +79,21 @@ namespace Api.Service.Controllers
                 firstBasketItem.Price = p.PaymentAmount.ToString();
                 basketItems.Add(firstBasketItem);
 
+                BasketItem secondBasketItem = new BasketItem();
+                secondBasketItem.Id = "BI102";
+                secondBasketItem.Name = "Game code";
+                secondBasketItem.Category1 = "Game";
+                secondBasketItem.Category2 = "Online Game Items";
+                secondBasketItem.ItemType = BasketItemType.VIRTUAL.ToString();
+                secondBasketItem.Price = "0.1";
+                basketItems.Add(secondBasketItem);
+
                 request.BasketItems = basketItems;
 
-                Iyzipay.Model.Payment payment = Iyzipay.Model.Payment.Create(request, _options);
-                
-                if(payment.Status.Equals(Status.SUCCESS.ToString(),StringComparison.OrdinalIgnoreCase))
-                {
-                    var debit = _invoiceService.Debt(int.Parse(userId.Value), decimal.Parse(payment.Price));                   
-                    return Ok(debit);
-                }
-                return BadRequest(payment.ErrorMessage);
+                Payment payment = Payment.Create(request, _options);
+                              
+                var debit = _invoiceService.Debt(int.Parse(userId.Value), decimal.Parse(payment.Price));                   
+                return Ok(debit);
             }
             catch (Exception ex)
             {

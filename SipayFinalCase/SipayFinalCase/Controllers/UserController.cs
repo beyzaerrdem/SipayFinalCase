@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Api.Service.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -54,8 +54,16 @@ namespace Api.Service.Controllers
         [HttpPut("{id}")]
         public ApiResponse Put(int id, [FromBody] UserRequest request)
         {
-            var response = _userService.Update(id, request);
-            return response;
+            UserValidator userValidator = new UserValidator();
+            var result = userValidator.Validate(request);
+            if (result.IsValid)
+            {
+                var response = _userService.Update(id, request);
+                return response;
+            }
+            var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
+            var errorMessage = string.Join(", ", errorMessages);
+            return new ApiResponse { Success = false, Message = errorMessage };
         }
 
         [HttpDelete("{id}")]

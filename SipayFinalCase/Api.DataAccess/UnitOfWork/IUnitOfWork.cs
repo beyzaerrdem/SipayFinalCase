@@ -11,8 +11,8 @@ namespace Api.DataAccess.UnitOfWork
 
         IGenericRepository<User> UserRepository { get; }
         IGenericRepository<Apartment> ApartmentRepository { get; }
-        IGenericRepository<Vehicle> VehicleRepository { get; }
         IGenericRepository<Invoice> InvoiceRepository { get; }
         IGenericRepository<UserLogin> UserLoginRepository { get; }
+        IGenericRepository<Message> MessageRepository { get; }
     }
 }

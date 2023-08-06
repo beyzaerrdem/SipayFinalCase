@@ -26,7 +26,5 @@ namespace Api.Schema.Response
         public string Role { get; set; }
 
         public List<InvoiceResponse> Invoices { get; set; }
-
-        public List<VehicleResponse> Vehicles { get; set; }
     }
 }

@@ -3,19 +3,16 @@ using Api.Business;
 using Api.Business.ValidationRules;
 using Api.Schema.Request;
 using Api.Schema.Response;
-using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace Api.Service.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ApartmentController : ControllerBase
-    {
-        ApartmentValidator apartmentValidator = new ApartmentValidator();
-
+    {    
         private readonly IApartmentService _apartmentService;
 
         public ApartmentController(IApartmentService apartmentService)
@@ -39,13 +36,13 @@ namespace Api.Service.Controllers
 
         [HttpPost]
         public ApiResponse Post([FromBody] ApartmentRequest request)
-        {       
+        {
+            ApartmentValidator apartmentValidator = new ApartmentValidator();
             var result = apartmentValidator.Validate(request);
             if (result.IsValid)
             {
                 var entity = _apartmentService.Insert(request);
                 return entity;
-                // new ApiResponse { Success = true, Response = entity };
             }
             var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
             var errorMessage = string.Join(", ", errorMessages);
@@ -55,8 +52,16 @@ namespace Api.Service.Controllers
         [HttpPut("{id}")]
         public ApiResponse Put(int id, [FromBody] ApartmentRequest request)
         {
-            var response = _apartmentService.Update(id, request);
-            return response;
+            ApartmentValidator apartmentValidator = new ApartmentValidator();
+            var result = apartmentValidator.Validate(request);
+            if (result.IsValid)
+            {
+                var response = _apartmentService.Update(id, request);
+                return response;
+            }
+            var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
+            var errorMessage = string.Join(", ", errorMessages);
+            return new ApiResponse { Success = false, Message = errorMessage };
         }
 
         [HttpDelete("{id}")]

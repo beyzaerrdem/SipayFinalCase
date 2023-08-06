@@ -14,20 +14,21 @@ public class SipayApiDbContext : DbContext
 
     public DbSet<Apartment> Apartments { get; set; }
 
-    public DbSet<Vehicle> Vehicles { get; set; }
-
     public DbSet<Invoice> Invoices { get; set; }
 
     public DbSet<UserLogin> UserLogin { get; set; }
+
+    public DbSet<Payment> Payments { get; set; }
+
+    public DbSet<Message> Messages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new ApartmentConfiguration());
-        modelBuilder.ApplyConfiguration(new VehicleConfiguration());
         modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
         modelBuilder.ApplyConfiguration(new UserLoginConfiguration());
-
+ 
         base.OnModelCreating(modelBuilder);
     }
 }

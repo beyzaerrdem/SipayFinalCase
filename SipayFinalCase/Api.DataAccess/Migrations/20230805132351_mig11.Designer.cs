@@ -3,6 +3,7 @@ using System;
 using Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.DataAccess.Migrations
 {
     [DbContext(typeof(SipayApiDbContext))]
-    partial class SipayApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230805132351_mig11")]
+    partial class mig11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,6 +238,28 @@ namespace Api.DataAccess.Migrations
                     b.ToTable("UserLogin");
                 });
 
+            modelBuilder.Entity("Api.DataAccess.Models.Vehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("PlateNo")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Vehicles");
+                });
+
             modelBuilder.Entity("Api.DataAccess.Models.Invoice", b =>
                 {
                     b.HasOne("Api.DataAccess.Models.User", "User")
@@ -277,6 +301,17 @@ namespace Api.DataAccess.Migrations
                     b.Navigation("UserLogin");
                 });
 
+            modelBuilder.Entity("Api.DataAccess.Models.Vehicle", b =>
+                {
+                    b.HasOne("Api.DataAccess.Models.User", "User")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Api.DataAccess.Models.Apartment", b =>
                 {
                     b.Navigation("User")
@@ -288,6 +323,8 @@ namespace Api.DataAccess.Migrations
                     b.Navigation("Invoices");
 
                     b.Navigation("Payments");
+
+                    b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
         }

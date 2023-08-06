@@ -33,8 +33,6 @@ namespace Api.DataAccess.Models
         public List<Payment> Payments { get; set; }
 
         public List<Invoice> Invoices { get; set; }
-
-        public List<Vehicle> Vehicles { get; set; }
     }
 
     public class UserConfiguration : IEntityTypeConfiguration<User>
@@ -53,11 +51,6 @@ namespace Api.DataAccess.Models
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId)
                 .IsRequired(true);
-
-            builder.HasMany(x => x.Vehicles)
-              .WithOne(x => x.User)
-              .HasForeignKey(x => x.UserId)
-              .IsRequired(true);                    
         }
 
     }

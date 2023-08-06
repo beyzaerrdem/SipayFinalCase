@@ -3,10 +3,13 @@ using Api.Business;
 using Api.Business.ValidationRules;
 using Api.Schema.Request;
 using Api.Schema.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Api.Service.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class InvoiceController : ControllerBase
@@ -35,12 +38,10 @@ namespace Api.Service.Controllers
         [HttpPost]
         public ApiResponse Post([FromBody] InvoiceRequest request)
         {
-            InvoiceResponse invoiceResponse = new InvoiceResponse();
             InvoiceValidator invoiceValidator = new InvoiceValidator();
             var result = invoiceValidator.Validate(request);
             if (result.IsValid)
-            {
-    
+            {   
                 var entity = _invoiceService.Insert(request);
                 return entity;
             }
@@ -52,8 +53,16 @@ namespace Api.Service.Controllers
         [HttpPut("{id}")]
         public ApiResponse Put(int id, [FromBody] InvoiceRequest request)
         {
-            var response = _invoiceService.Update(id, request);
-            return response;
+            InvoiceValidator invoiceValidator = new InvoiceValidator();
+            var result = invoiceValidator.Validate(request);
+            if (result.IsValid)
+            {
+                var response = _invoiceService.Update(id, request);
+                return response;
+            }
+            var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
+            var errorMessage = string.Join(", ", errorMessages);
+            return new ApiResponse { Success = false, Message = errorMessage };
         }
 
         [HttpDelete("{id}")]
